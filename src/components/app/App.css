@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
+
+body {
+    background: url('../../../public/images/background.jpg');
+    font-weight: 400;
+    font-family: 'Poppins';
+    font-size: 30px;
+    color: white;
+}
+
+h1 {
+    width: 100%;
+    text-shadow: 5px 5px 10px black;
+    text-align: center;
+    font-size: 66px;
+    font-weight: 700;
+}
+
+main {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul {
+    margin: 0;
+    padding-block-start: 1em;
+    padding-block-end: 1em;
+}
+
+li {
+    list-style-type: none;
+}
+
+i {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+i:hover {
+    border: solid rgb(183, 182, 182);
+    border-width: 0 3px 3px 0;
+}
+
+.info_wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(57, 56, 56, 0.548);
+}
+
+.main_info {
+    height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+}
+
+.weather_icon {
+    width: 99px;
+    height: 99px;
+}
+
+.tempo {
+    display: flex;
+    align-items: center;
+}
+
+.tempo span {
+    font-weight: 200;
+    height: 100%;
+}
+
+.number {
+    font-size: 66px;
+}
+
+.degrees {
+    position: relative;
+    top: -15px;
+    font-size: 22px;
+}
+
+.state {
+    margin-left: 33px;
+    font-size: 44px;
+}
+
+.additional_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.additional_info span {
+    font-weight: 200;
+}
+
+.location_and_time {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.location_and_time span {
+    font-weight: 200;
+}
+
+.time {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.next_days {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    background-color:rgba(0, 255, 255, 0.311);
+}
+
+.next_days li {
+    box-sizing: border-box;
+    width: 165px;
+    height: 220px;
+    border-radius: 11px;
+    box-shadow: 5px 5px 30px rgb(18, 18, 18);
+    background-color:rgba(128, 128, 128, 0.667);
+    transition: background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.next_days li:hover {
+    background-color:rgba(69, 69, 69, 0.667);
+    cursor: pointer;
+}
+
+.next_days li span {
+    font-size: 25px;
+    font-weight: 200;
+}
+
+.next_days li img {
+    height: 100px;
+    width: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.next_days li.active {
+    background-color: rgba(45, 45, 45, 0.667);
+    transition: background-color 0.2s;
+}
+
+.next_days li.active:hover {
+    background-color:rgba(45, 45, 45, 0.667);
+    cursor: pointer;
+}
