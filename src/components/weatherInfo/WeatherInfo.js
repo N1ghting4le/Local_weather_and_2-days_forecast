@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import Spinner from '../spinner/Spinner';
 
 const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, num}) => {
     useEffect(() => {
@@ -38,7 +39,7 @@ const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hou
                 <span>Wind speed: {weather.wind}</span>
             </div>
         </>
-    ) : null; 
+    ) : <Spinner/>; 
 }
 
 export default WeatherInfo;

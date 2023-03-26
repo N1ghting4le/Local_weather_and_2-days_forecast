@@ -27,7 +27,7 @@ function App() {
   }, [coords]);
 
   const updateLocation = () => {
-    navigator.geolocation.watchPosition((position) => {
+    navigator.geolocation.getCurrentPosition((position) => {
         setCoords([position.coords.latitude, position.coords.longitude]);
     });
   }
@@ -37,7 +37,6 @@ function App() {
         .then(state => {
             setDailyForecasts(state.dailyForecasts);
             setWeather(state.currentWeather);
-            setNum(0);
             setCurrent(state.currentWeather);
             setlocationAndTime(state.currentLocationAndTime);
             setCurrentLocationAndTime(state.currentLocationAndTime);
