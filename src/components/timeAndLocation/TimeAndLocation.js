@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import classNames from "classnames";
 
-const TimeAndLocation = ({locationAndTime, hours, setHours, num}) => {
+const TimeAndLocation = ({locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime}) => {
     useEffect(() => {
         if (locationAndTime) {
             setHours(+locationAndTime.time.slice(0, locationAndTime.time.indexOf(':')));
@@ -10,14 +10,21 @@ const TimeAndLocation = ({locationAndTime, hours, setHours, num}) => {
 
     const onHoursIncrease = () => {
         setHours(hours => hours + 1);
+        setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) + 1}:00`}));
     }
 
     const onHoursDecrease = () => {
         setHours(hours => hours - 1);
+        if (num !== 0 && hours - 1 !== currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'))) {
+            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) - 1}:00`}));
+        }
+        else {
+            setlocationAndTime(currentLocationAndTime);
+        }
     }
 
     const toggleLeftArrow = () => {
-        return num === 0 && hours === +locationAndTime.time.slice(0, locationAndTime.time.indexOf(':')) || hours === 0 ?
+        return num === 0 && hours === +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':')) || hours === 0 ?
         classNames({
             'hidden': true
         }) :
@@ -40,7 +47,7 @@ const TimeAndLocation = ({locationAndTime, hours, setHours, num}) => {
         <div className="location_and_time">
             <span>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>
-            <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} onClick={onHoursDecrease}></i> {hours === +locationAndTime.time.slice(0, locationAndTime.time.indexOf(':')) ? locationAndTime.time : `${hours}:00`} <i className={`arrow right ${toggleRightArrow()}`} onClick={onHoursIncrease}></i></span>
+            <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} onClick={onHoursDecrease}></i> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} onClick={onHoursIncrease}></i></span>
         </div>
     ) : null;
 }

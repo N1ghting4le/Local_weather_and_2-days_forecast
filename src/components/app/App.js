@@ -60,7 +60,9 @@ function App() {
             locationAndTime={locationAndTime}
             num={num}/>
           <TimeAndLocation 
-            locationAndTime={locationAndTime} 
+            locationAndTime={locationAndTime}
+            setlocationAndTime={setlocationAndTime}
+            currentLocationAndTime={currentLocationAndTime} 
             coords={coords} 
             hours={hours} 
             setHours={setHours}
