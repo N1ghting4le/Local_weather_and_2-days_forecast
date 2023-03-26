@@ -15,11 +15,10 @@ const TimeAndLocation = ({locationAndTime, currentLocationAndTime, hours, setHou
 
     const onHoursDecrease = () => {
         setHours(hours => hours - 1);
-        if (num !== 0 && hours - 1 !== currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'))) {
-            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) - 1}:00`}));
-        }
-        else {
+        if (num === 0 && hours - 1 === +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'))) {
             setlocationAndTime(currentLocationAndTime);
+        } else {
+            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) - 1}:00`}));
         }
     }
 
