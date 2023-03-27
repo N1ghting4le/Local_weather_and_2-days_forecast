@@ -14,12 +14,12 @@ const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, se
 
     const createWeatherObj = () => {
         setWeather({
-            condition: dailyForecast.hourlyForecasts[11].condition.text,
-            icon: dailyForecast.hourlyForecasts[11].condition.icon,
-            tempo: Math.floor(dailyForecast.hourlyForecasts[11].temp_c),
-            humidity: `${dailyForecast.hourlyForecasts[11].humidity}%`,
-            wind: `${dailyForecast.hourlyForecasts[11].wind_kph} kph`,
-            clouds: `${dailyForecast.hourlyForecasts[11].cloud}%`
+            condition: dailyForecast.hourlyForecasts[12].condition.text,
+            icon: dailyForecast.hourlyForecasts[12].condition.icon,
+            tempo: Math.floor(dailyForecast.hourlyForecasts[12].temp_c),
+            humidity: `${dailyForecast.hourlyForecasts[12].humidity}%`,
+            wind: `${dailyForecast.hourlyForecasts[12].wind_kph} kph`,
+            clouds: `${dailyForecast.hourlyForecasts[12].cloud}%`
         });
     }
 
