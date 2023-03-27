@@ -58,6 +58,7 @@ function App() {
             dailyForecasts={dailyForecasts} 
             hours={hours}
             locationAndTime={locationAndTime}
+            currentLocationAndTime={currentLocationAndTime}
             num={num}/>
           <TimeAndLocation 
             locationAndTime={locationAndTime}

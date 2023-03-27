@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 import Spinner from '../spinner/Spinner';
 
-const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, num}) => {
+const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, currentLocationAndTime, num}) => {
     useEffect(() => {
-        if (locationAndTime) {
+        if (locationAndTime && (num !== 0 || num === 0 && hours !== +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':')))) {
             updateWeather();
         } else if (num !== 0) {
             return;
