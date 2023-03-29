@@ -1,5 +1,17 @@
 import {useEffect} from 'react';
 import Spinner from '../spinner/Spinner';
+import Error from '../error/Error';
+
+const setContent = (process, weather) => {
+    switch (process) {
+        case 'loading':
+            return <Spinner/>;
+        case 'confirmed':
+            return <View weather={weather}/>;
+        case 'error':
+            return <Error/>;
+    }
+}
 
 const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, currentLocationAndTime, num}) => {
     useEffect(() => {
@@ -23,7 +35,13 @@ const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hou
         });
     }
 
-    return process === 'confirmed' ? (
+    return setContent(process, weather);
+}
+
+export default WeatherInfo;
+
+const View = ({weather}) => {
+    return (
         <>
             <div className="main_info">
                 <img src={weather.icon} alt="sun with clouds" className="weather_icon"></img>
@@ -39,7 +57,5 @@ const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hou
                 <span>Wind speed: {weather.wind}</span>
             </div>
         </>
-    ) : <Spinner/>; 
+    );
 }
-
-export default WeatherInfo;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import classNames from "classnames";
 
-const TimeAndLocation = ({locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime}) => {
+const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime}) => {
     useEffect(() => {
         if (locationAndTime) {
             setHours(+locationAndTime.time.slice(0, locationAndTime.time.indexOf(':')));
@@ -42,7 +42,7 @@ const TimeAndLocation = ({locationAndTime, currentLocationAndTime, hours, setHou
         })
     }
 
-    return locationAndTime ? (
+    return locationAndTime && process === 'confirmed' ? (
         <div className="location_and_time">
             <span>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>

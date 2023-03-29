@@ -13,6 +13,13 @@ const useWeatherService = () => {
         return transformState(res);
     };
 
+    const getCurrentStateBySearch = async (town, days = 3) => {
+        const res = await request(
+            `${_apiBase}forecast.json?key=${_apiKey}&q=${town}&days=${days}`
+        );
+        return transformState(res);
+    };
+
     const transformState = (res) => {
         return {
             currentWeather: {
@@ -43,7 +50,8 @@ const useWeatherService = () => {
 		clearError,
 		process,
 		setProcess,
-		getCurrentState
+		getCurrentState,
+        getCurrentStateBySearch
 	};
 }
 

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import NextDaysList from '../nextDaysList/NextDaysList';
 import TimeAndLocation from '../timeAndLocation/TimeAndLocation';
 import WeatherInfo from '../weatherInfo/WeatherInfo';
+import Search from '../search/Search';
 import useWeatherService from '../../service/WeatherService';
 
 function App() {
@@ -14,17 +15,24 @@ function App() {
   const [num, setNum] = useState(0);
   const [weather, setWeather] = useState(null);
   const [current, setCurrent] = useState(null);
-  const {getCurrentState, process, setProcess} = useWeatherService();
+  const [town, setTown] = useState(null);
+  const {getCurrentState, getCurrentStateBySearch, process, setProcess, clearError} = useWeatherService();
 
   useEffect(() => {
     updateLocation();
   }, []);
 
   useEffect(() => {
-    if (coords.length === 2) {
+    if (coords.length === 2 && !town) {
         setCurrentWeather();
     }
-  }, [coords]);
+  }, [coords, town]);
+
+  useEffect(() => {
+    if (town) {
+        setCurrentWeatherBySearch();
+    }
+  }, [town]);
 
   const updateLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -35,6 +43,8 @@ function App() {
   const setCurrentWeather = () => {
     getCurrentState(coords[0], coords[1])
         .then(state => {
+            clearError();
+            setNum(0);
             setDailyForecasts(state.dailyForecasts);
             setWeather(state.currentWeather);
             setCurrent(state.currentWeather);
@@ -45,10 +55,26 @@ function App() {
         .then(() => setProcess('confirmed'));
   }
 
+  const setCurrentWeatherBySearch = () => {
+    getCurrentStateBySearch(town)
+      .then(state => {
+          clearError();
+          setNum(0);
+          setDailyForecasts(state.dailyForecasts);
+          setWeather(state.currentWeather);
+          setCurrent(state.currentWeather);
+          setlocationAndTime(state.currentLocationAndTime);
+          setCurrentLocationAndTime(state.currentLocationAndTime);
+          console.log(state);
+      })
+      .then(() => setProcess('confirmed'));
+  }
+
   return (
     <div className="App">
       <h1>Weather</h1>
       <main>
+        <Search setTown={setTown}/>
         <div className="info_wrapper">
           <WeatherInfo
             process={process}
@@ -60,7 +86,8 @@ function App() {
             locationAndTime={locationAndTime}
             currentLocationAndTime={currentLocationAndTime}
             num={num}/>
-          <TimeAndLocation 
+          <TimeAndLocation
+            process={process} 
             locationAndTime={locationAndTime}
             setlocationAndTime={setlocationAndTime}
             currentLocationAndTime={currentLocationAndTime} 

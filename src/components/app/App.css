@@ -18,6 +18,9 @@ h1 {
 
 main {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -39,6 +42,16 @@ i {
     display: inline-block;
     padding: 5px;
     cursor: pointer;
+}
+
+input {
+    font-weight: 200;
+    font-family: 'Poppins';
+    font-size: 44px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    border: 0;
+    box-shadow: 5px 5px 25px rgb(6, 6, 6);
 }
 
 i:hover {
@@ -131,6 +144,8 @@ i:hover {
 
 .next_days {
     display: flex;
+    box-sizing: border-box;
+    width: 100%;
     justify-content: center;
     align-items: center;
     gap: 22px;
@@ -178,4 +193,12 @@ i:hover {
 .next_days li.active:hover {
     background-color:rgba(45, 45, 45, 0.667);
     cursor: pointer;
+}
+
+.error {
+    height: 134.4px;
+    font-size: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
