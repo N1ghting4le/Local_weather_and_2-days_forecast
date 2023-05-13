@@ -12,6 +12,12 @@ const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, se
         }                                      
     }
 
+    const updateWeatherInfoByKey = (e) => {
+        if (e.code === 'Enter') {
+            updateWeatherInfo();
+        }
+    }
+
     const createWeatherObj = () => {
         setWeather({
             condition: dailyForecast.hourlyForecasts[12].condition.text,
@@ -34,7 +40,7 @@ const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, se
     }
 
     return (
-        <li onClick={updateWeatherInfo} className={toggleActive()}>
+        <li onClick={updateWeatherInfo} onKeyDown={updateWeatherInfoByKey} tabIndex={0} className={toggleActive()}>
             <span className="day">{dailyForecast.date}</span>
             <img src={dailyForecast.weather.condition.icon} alt={dailyForecast.weather.condition.text}></img>
             <span className="temperature">{Math.floor(dailyForecast.weather.mintemp_c)}&deg; - {Math.floor(dailyForecast.weather.maxtemp_c)}&deg;</span>

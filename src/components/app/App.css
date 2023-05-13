@@ -73,6 +73,7 @@ i:hover {
     justify-content: center;
     align-items: center;
     gap: 11px;
+    max-width: 700px;
 }
 
 .weather_icon {
@@ -120,6 +121,7 @@ i:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 500px;
 }
 
 .right {

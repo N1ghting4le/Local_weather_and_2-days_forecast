@@ -22,6 +22,18 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
         }
     }
 
+    const onHoursIncreaseByKey = (e) => {
+        if (e.code === 'Enter') {
+            onHoursIncrease();
+        }
+    }
+
+    const onHoursDecreaseByKey = (e) => {
+        if (e.code === 'Enter') {
+            onHoursDecrease();
+        }
+    }
+
     const toggleLeftArrow = () => {
         return num === 0 && hours === +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':')) || hours === 0 ?
         classNames({
@@ -46,7 +58,7 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
         <div className="location_and_time">
             <span>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>
-            <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} onClick={onHoursDecrease}></i> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} onClick={onHoursIncrease}></i></span>
+            <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} tabIndex={0} onClick={onHoursDecrease} onKeyDown={onHoursDecreaseByKey}></i> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} tabIndex={0} onClick={onHoursIncrease} onKeyDown={onHoursIncreaseByKey}></i></span>
         </div>
     ) : null;
 }
