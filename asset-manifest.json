@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/WeatherService/static/css/main.9f84f0ab.css",
+    "main.js": "/WeatherService/static/js/main.b6c7fbaf.js",
+    "static/media/background.jpg": "/WeatherService/static/media/background.ed9a23c9b00ea8334a1a.jpg",
+    "index.html": "/WeatherService/index.html",
+    "main.9f84f0ab.css.map": "/WeatherService/static/css/main.9f84f0ab.css.map",
+    "main.b6c7fbaf.js.map": "/WeatherService/static/js/main.b6c7fbaf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9f84f0ab.css",
+    "static/js/main.b6c7fbaf.js"
+  ]
+}
