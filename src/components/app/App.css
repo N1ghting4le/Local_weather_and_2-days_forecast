@@ -42,6 +42,7 @@ i {
 }
 
 input {
+    position: relative;
     font-weight: 200;
     font-family: 'Poppins';
     font-size: 44px;
@@ -51,9 +52,17 @@ input {
     box-shadow: 5px 5px 25px rgb(6, 6, 6);
 }
 
+
 i:hover {
     border: solid rgb(183, 182, 182);
     border-width: 0 3px 3px 0;
+}
+
+.search_icon {
+    position: absolute;
+    top: 9px;
+    right: 5px;
+    cursor: pointer;
 }
 
 .info_wrapper {
@@ -209,7 +218,7 @@ i:hover {
 
     input {
         width: 80vw;
-        font-size: 2rem;
+        font-size: inherit;
     }
 
     .info_wrapper {
@@ -252,5 +261,10 @@ i:hover {
 
     .next_days li span.day {
         font-size: 18px;
+    }
+
+    .search_icon {
+        top: 5px;
+        height: 30px;
     }
 }
