@@ -1,6 +1,6 @@
 import NextDaysItem from "../nextDaysItem/NextDaysItem";
 
-const NextDaysList = ({dailyForecasts, setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num}) => {
+const NextDaysList = ({process, dailyForecasts, setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num}) => {
     const createDayCards = () => {
         return dailyForecasts ? dailyForecasts.map((dailyForecast, i) => {
             return <NextDaysItem key={i} 
@@ -17,11 +17,11 @@ const NextDaysList = ({dailyForecasts, setlocationAndTime, setNum, current, setW
 
     const elements = createDayCards();
 
-    return (
+    return process === 'confirmed' ? (
         <ul className="next_days">
             {elements}
         </ul>
-    );
+    ) : null;
 }
 
 export default NextDaysList;

@@ -1,6 +1,6 @@
-const Error = () => {
+const Error = ({text}) => {
     return (
-        <div className="error">Please enter the correct name of town</div>
+        <div className="error">{text}</div>
     );
 };
 

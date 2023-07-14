@@ -204,11 +204,12 @@ i:hover {
 }
 
 .error {
-    height: 134.4px;
+    min-height: 134.4px;
     font-size: 44px;
     display: flex;
-    justify-content: center;
+    text-align: center;
     align-items: center;
+    padding-inline: 10px;
 }
 
 @media (max-width: 480px) {
@@ -259,12 +260,16 @@ i:hover {
         padding-block: 10px;
     }
 
-    .next_days li span.day {
+    .next_days li span {
         font-size: 18px;
     }
 
     .search_icon {
         top: 5px;
         height: 30px;
+    }
+
+    .error {
+        font-size: inherit;
     }
 }

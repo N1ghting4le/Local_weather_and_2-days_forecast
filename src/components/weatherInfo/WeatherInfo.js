@@ -9,7 +9,10 @@ const setContent = (process, weather) => {
         case 'confirmed':
             return <View weather={weather}/>;
         case 'error':
-            return <Error/>;
+            return <Error text="Please enter the correct name of town"/>;
+        case 'geolocation disabled':
+            return <Error text="If you want to get weather data of your current location please turn on geolocation on your device 
+                                and allow website to use it"/>
     }
 }
 

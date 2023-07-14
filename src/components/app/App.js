@@ -29,6 +29,12 @@ function App() {
   }, [coords, town]);
 
   useEffect(() => {
+    if (!coords.length) {
+      setProcess('geolocation disabled');
+    }
+  }, [coords]);
+
+  useEffect(() => {
     if (town) {
       setCurrentWeatherBySearch();
     }
@@ -95,6 +101,7 @@ function App() {
             num={num}/>
         </div>
         <NextDaysList 
+          process={process}
           dailyForecasts={dailyForecasts} 
           setlocationAndTime={setlocationAndTime}
           setNum={setNum}
