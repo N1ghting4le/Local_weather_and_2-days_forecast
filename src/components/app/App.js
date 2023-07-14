@@ -24,56 +24,54 @@ function App() {
 
   useEffect(() => {
     if (coords.length === 2 && !town) {
-        setCurrentWeather();
+      setCurrentWeather();
     }
   }, [coords, town]);
 
   useEffect(() => {
     if (town) {
-        setCurrentWeatherBySearch();
+      setCurrentWeatherBySearch();
     }
   }, [town]);
 
   const updateLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-        setCoords([position.coords.latitude, position.coords.longitude]);
+      setCoords([position.coords.latitude, position.coords.longitude]);
     });
   }
 
   const setCurrentWeather = () => {
     getCurrentState(coords[0], coords[1])
-        .then(state => {
-            clearError();
-            setNum(0);
-            setDailyForecasts(state.dailyForecasts);
-            setWeather(state.currentWeather);
-            setCurrent(state.currentWeather);
-            setlocationAndTime(state.currentLocationAndTime);
-            setCurrentLocationAndTime(state.currentLocationAndTime);
-            console.log(state);
-        })
-        .then(() => setProcess('confirmed'));
+    .then(state => {
+      clearError();
+      setNum(0);
+      setDailyForecasts(state.dailyForecasts);
+      setWeather(state.currentWeather);
+      setCurrent(state.currentWeather);
+      setlocationAndTime(state.currentLocationAndTime);
+      setCurrentLocationAndTime(state.currentLocationAndTime);
+      setProcess('confirmed');
+    });
   }
 
   const setCurrentWeatherBySearch = () => {
     getCurrentStateBySearch(town)
-      .then(state => {
-          clearError();
-          setNum(0);
-          setDailyForecasts(state.dailyForecasts);
-          setWeather(state.currentWeather);
-          setCurrent(state.currentWeather);
-          setlocationAndTime(state.currentLocationAndTime);
-          setCurrentLocationAndTime(state.currentLocationAndTime);
-          console.log(state);
-      })
-      .then(() => setProcess('confirmed'));
+    .then(state => {
+      clearError();
+      setNum(0);
+      setDailyForecasts(state.dailyForecasts);
+      setWeather(state.currentWeather);
+      setCurrent(state.currentWeather);
+      setlocationAndTime(state.currentLocationAndTime);
+      setCurrentLocationAndTime(state.currentLocationAndTime);
+      setProcess('confirmed');
+    });
   }
 
   return (
     <div className="App">
-      <h1>Weather</h1>
       <main>
+        <h1>Weather</h1>
         <Search setTown={setTown}/>
         <div className="info_wrapper">
           <WeatherInfo

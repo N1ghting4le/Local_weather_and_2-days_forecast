@@ -36,7 +36,7 @@ const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, se
         }) :
         classNames({
             'active': false
-        })
+        });
     }
 
     return (

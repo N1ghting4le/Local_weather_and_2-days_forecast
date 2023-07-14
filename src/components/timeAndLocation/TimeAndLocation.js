@@ -41,7 +41,7 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
         }) :
         classNames({
             'hidden': false
-        })
+        });
     }
 
     const toggleRightArrow = () => {
@@ -51,12 +51,12 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
         }) :
         classNames({
             'hidden': false
-        })
+        });
     }
 
     return locationAndTime && process === 'confirmed' ? (
         <div className="location_and_time">
-            <span>{locationAndTime.place}, {locationAndTime.country}</span>
+            <span style={{'textAlign': 'center'}}>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>
             <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} tabIndex={0} onClick={onHoursDecrease} onKeyDown={onHoursDecreaseByKey}></i> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} tabIndex={0} onClick={onHoursIncrease} onKeyDown={onHoursIncreaseByKey}></i></span>
         </div>
