@@ -3,7 +3,7 @@ import { useHttp } from "../hooks/http.hook";
 const useWeatherService = () => {
     const { request, clearError, process, setProcess } = useHttp();
 
-    const _apiBase = 'http://api.weatherapi.com/v1/';
+    const _apiBase = 'https://api.weatherapi.com/v1/';
     const _apiKey = 'cfb797107452426caf663343232403';
 
     const getCurrentState = async (lat, lon, days = 3) => {
