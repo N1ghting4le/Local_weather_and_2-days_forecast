@@ -1,17 +1,13 @@
 import NextDaysItem from "../nextDaysItem/NextDaysItem";
+import { Context } from "../app/App";
+import { useContext } from "react";
 
-const NextDaysList = ({process, dailyForecasts, setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num}) => {
+const NextDaysList = () => {
+    const {process, dailyForecasts} = useContext(Context);
+
     const createDayCards = () => {
         return dailyForecasts ? dailyForecasts.map((dailyForecast, i) => {
-            return <NextDaysItem key={i} 
-                                    i={i} 
-                                    dailyForecast={dailyForecast} 
-                                    setlocationAndTime={setlocationAndTime}
-                                    setNum={setNum}
-                                    current={current}
-                                    setWeather={setWeather}
-                                    currentLocationAndTime={currentLocationAndTime}
-                                    num={num}/>
+            return <NextDaysItem key={i} i={i} dailyForecast={dailyForecast}/>
         }) : null;
     }
 

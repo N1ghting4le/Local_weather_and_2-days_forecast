@@ -1,6 +1,19 @@
-import {useEffect} from 'react';
+import { useEffect, useContext } from 'react';
+import { Context } from '../app/App';
+import { currentHours } from '../timeAndLocation/TimeAndLocation';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
+
+export const updateWeather = (root, hours, setWeather) => {
+    setWeather({
+        condition: root.hourlyForecasts[hours].condition.text,
+        icon: root.hourlyForecasts[hours].condition.icon,
+        tempo: Math.floor(root.hourlyForecasts[hours].temp_c),
+        humidity: `${root.hourlyForecasts[hours].humidity}%`,
+        wind: `${root.hourlyForecasts[hours].wind_kph} kph`,
+        clouds: `${root.hourlyForecasts[hours].cloud}%`
+    });
+}
 
 const setContent = (process, weather) => {
     switch (process) {
@@ -16,27 +29,18 @@ const setContent = (process, weather) => {
     }
 }
 
-const WeatherInfo = ({process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, currentLocationAndTime, num}) => {
+const WeatherInfo = () => {
+    const {process, setWeather, current, weather, dailyForecasts, hours, locationAndTime, currentLocationAndTime, num} = useContext(Context);
+
     useEffect(() => {
-        if (locationAndTime && (num !== 0 || num === 0 && hours !== +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':')))) {
-            updateWeather();
+        if (locationAndTime && (num !== 0 || num === 0 && hours !== currentHours(currentLocationAndTime))) {
+            updateWeather(dailyForecasts[num], hours, setWeather);
         } else if (num !== 0) {
             return;
         } else {
             setWeather(current);
         }
     }, [hours]);
-
-    const updateWeather = () => {
-        setWeather({
-            condition: dailyForecasts[num].hourlyForecasts[hours].condition.text,
-            icon: dailyForecasts[num].hourlyForecasts[hours].condition.icon,
-            tempo: Math.floor(dailyForecasts[num].hourlyForecasts[hours].temp_c),
-            humidity: `${dailyForecasts[num].hourlyForecasts[hours].humidity}%`,
-            wind: `${dailyForecasts[num].hourlyForecasts[hours].wind_kph} kph`,
-            clouds: `${dailyForecasts[num].hourlyForecasts[hours].cloud}%`
-        });
-    }
 
     return setContent(process, weather);
 }

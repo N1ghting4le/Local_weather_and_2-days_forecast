@@ -1,24 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useMemo } from "react";
+import { Context } from "../app/App";
 import classNames from "classnames";
 
-const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime}) => {
+export const currentHours = currentLocationAndTime => +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'));
+
+const TimeAndLocation = () => {
+    const {process, locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime} = useContext(Context);
+    const index = useMemo(() => locationAndTime ? locationAndTime.time.indexOf(':') : null, [locationAndTime]);
+
     useEffect(() => {
         if (locationAndTime) {
-            setHours(+locationAndTime.time.slice(0, locationAndTime.time.indexOf(':')));
+            setHours(+locationAndTime.time.slice(0, index));
         }
     }, [locationAndTime]);
 
     const onHoursIncrease = () => {
         setHours(hours => hours + 1);
-        setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) + 1}:00`}));
+        setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, index) + 1}:00`}));
     }
 
     const onHoursDecrease = () => {
         setHours(hours => hours - 1);
-        if (num === 0 && hours - 1 === +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'))) {
+        if (num === 0 && hours - 1 === currentHours(currentLocationAndTime)) {
             setlocationAndTime(currentLocationAndTime);
         } else {
-            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, locationAndTime.time.indexOf(':')) - 1}:00`}));
+            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, index) - 1}:00`}));
         }
     }
 
@@ -35,7 +41,7 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
     }
 
     const toggleLeftArrow = () => {
-        return num === 0 && hours === +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':')) || hours === 0 ?
+        return num === 0 && hours === currentHours(currentLocationAndTime) || hours === 0 ?
         classNames({
             'hidden': true
         }) :
@@ -58,7 +64,15 @@ const TimeAndLocation = ({process, locationAndTime, currentLocationAndTime, hour
         <div className="location_and_time">
             <span style={{'textAlign': 'center'}}>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>
-            <span className="time"><i className={`arrow left ${toggleLeftArrow()}`} tabIndex={0} onClick={onHoursDecrease} onKeyDown={onHoursDecreaseByKey}></i> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} tabIndex={0} onClick={onHoursIncrease} onKeyDown={onHoursIncreaseByKey}></i></span>
+            <span className="time">
+                <i className={`arrow left ${toggleLeftArrow()}`} 
+                   tabIndex={0} 
+                   onClick={onHoursDecrease} 
+                   onKeyDown={onHoursDecreaseByKey}/> {locationAndTime.time} <i className={`arrow right ${toggleRightArrow()}`} 
+                                                                                tabIndex={0} 
+                                                                                onClick={onHoursIncrease} 
+                                                                                onKeyDown={onHoursIncreaseByKey}/>
+            </span>
         </div>
     ) : null;
 }

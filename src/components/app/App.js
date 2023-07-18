@@ -1,10 +1,12 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import NextDaysList from '../nextDaysList/NextDaysList';
 import TimeAndLocation from '../timeAndLocation/TimeAndLocation';
 import WeatherInfo from '../weatherInfo/WeatherInfo';
 import Search from '../search/Search';
 import useWeatherService from '../../service/WeatherService';
+
+export const Context = createContext({});
 
 function App() {
   const [locationAndTime, setlocationAndTime] = useState(null);
@@ -19,12 +21,14 @@ function App() {
   const {getCurrentState, getCurrentStateBySearch, process, setProcess, clearError} = useWeatherService();
 
   useEffect(() => {
-    updateLocation();
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCoords([position.coords.latitude, position.coords.longitude]);
+    });
   }, []);
 
   useEffect(() => {
     if (coords.length === 2 && !town) {
-      setCurrentWeather();
+      getCurrentState(coords[0], coords[1]).then(resolve);
     }
   }, [coords, town]);
 
@@ -36,42 +40,19 @@ function App() {
 
   useEffect(() => {
     if (town) {
-      setCurrentWeatherBySearch();
+      getCurrentStateBySearch(town).then(resolve);
     }
   }, [town]);
 
-  const updateLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCoords([position.coords.latitude, position.coords.longitude]);
-    });
-  }
-
-  const setCurrentWeather = () => {
-    getCurrentState(coords[0], coords[1])
-    .then(state => {
-      clearError();
-      setNum(0);
-      setDailyForecasts(state.dailyForecasts);
-      setWeather(state.currentWeather);
-      setCurrent(state.currentWeather);
-      setlocationAndTime(state.currentLocationAndTime);
-      setCurrentLocationAndTime(state.currentLocationAndTime);
-      setProcess('confirmed');
-    });
-  }
-
-  const setCurrentWeatherBySearch = () => {
-    getCurrentStateBySearch(town)
-    .then(state => {
-      clearError();
-      setNum(0);
-      setDailyForecasts(state.dailyForecasts);
-      setWeather(state.currentWeather);
-      setCurrent(state.currentWeather);
-      setlocationAndTime(state.currentLocationAndTime);
-      setCurrentLocationAndTime(state.currentLocationAndTime);
-      setProcess('confirmed');
-    });
+  const resolve = state => {
+    clearError();
+    setNum(0);
+    setDailyForecasts(state.dailyForecasts);
+    setWeather(state.currentWeather);
+    setCurrent(state.currentWeather);
+    setlocationAndTime(state.currentLocationAndTime);
+    setCurrentLocationAndTime(state.currentLocationAndTime);
+    setProcess('confirmed');
   }
 
   return (
@@ -79,36 +60,25 @@ function App() {
       <main>
         <h1>Weather</h1>
         <Search setTown={setTown}/>
-        <div className="info_wrapper">
-          <WeatherInfo
-            process={process}
-            setWeather={setWeather}
-            current={current}
-            weather={weather} 
-            dailyForecasts={dailyForecasts} 
-            hours={hours}
-            locationAndTime={locationAndTime}
-            currentLocationAndTime={currentLocationAndTime}
-            num={num}/>
-          <TimeAndLocation
-            process={process} 
-            locationAndTime={locationAndTime}
-            setlocationAndTime={setlocationAndTime}
-            currentLocationAndTime={currentLocationAndTime} 
-            coords={coords} 
-            hours={hours} 
-            setHours={setHours}
-            num={num}/>
-        </div>
-        <NextDaysList 
-          process={process}
-          dailyForecasts={dailyForecasts} 
-          setlocationAndTime={setlocationAndTime}
-          setNum={setNum}
-          current={current}
-          setWeather={setWeather}
-          currentLocationAndTime={currentLocationAndTime}
-          num={num}/>
+        <Context.Provider value={{process,
+                                  weather, 
+                                  setWeather, 
+                                  current,  
+                                  dailyForecasts, 
+                                  hours,
+                                  setHours, 
+                                  locationAndTime,
+                                  setlocationAndTime, 
+                                  currentLocationAndTime,
+                                  num,
+                                  setNum,
+                                  coords}}>
+          <div className="info_wrapper">
+            <WeatherInfo/>
+            <TimeAndLocation/>
+          </div>
+          <NextDaysList/>
+        </Context.Provider>
       </main>
     </div>
   );

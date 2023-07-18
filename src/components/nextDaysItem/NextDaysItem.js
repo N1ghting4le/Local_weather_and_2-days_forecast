@@ -1,11 +1,16 @@
 import classNames from "classnames";
+import { Context } from "../app/App";
+import { updateWeather } from "../weatherInfo/WeatherInfo";
+import { useContext } from "react";
 
-const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, setWeather, currentLocationAndTime, num}) => {
+const NextDaysItem = ({dailyForecast, i}) => {
+    const {setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num} = useContext(Context);
+
     const updateWeatherInfo = () => {
         setNum(i);
         if (i !== 0) {
             setlocationAndTime(state => ({...state, date: dailyForecast.date, time: '12:00'}));
-            createWeatherObj();
+            updateWeather(dailyForecast, 12, setWeather);
         } else {
             setWeather(current);
             setlocationAndTime(currentLocationAndTime);
@@ -16,17 +21,6 @@ const NextDaysItem = ({dailyForecast, setlocationAndTime, i, setNum, current, se
         if (e.code === 'Enter') {
             updateWeatherInfo();
         }
-    }
-
-    const createWeatherObj = () => {
-        setWeather({
-            condition: dailyForecast.hourlyForecasts[12].condition.text,
-            icon: dailyForecast.hourlyForecasts[12].condition.icon,
-            tempo: Math.floor(dailyForecast.hourlyForecasts[12].temp_c),
-            humidity: `${dailyForecast.hourlyForecasts[12].humidity}%`,
-            wind: `${dailyForecast.hourlyForecasts[12].wind_kph} kph`,
-            clouds: `${dailyForecast.hourlyForecasts[12].cloud}%`
-        });
     }
 
     const toggleActive = () => {
