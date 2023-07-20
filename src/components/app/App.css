@@ -74,7 +74,6 @@ i:hover {
 }
 
 .main_info {
-    height: 110px;
     display: flex;
     justify-content: center;
     align-items: center;
