@@ -18,7 +18,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [current, setCurrent] = useState(null);
   const [town, setTown] = useState(null);
-  const {getCurrentState, getCurrentStateBySearch, process, setProcess, clearError} = useWeatherService();
+  const {getCurrentState, process, setProcess, clearError} = useWeatherService();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -28,21 +28,13 @@ function App() {
 
   useEffect(() => {
     if (coords.length === 2 && !town) {
-      getCurrentState(coords[0], coords[1]).then(resolve);
-    }
-  }, [coords, town]);
-
-  useEffect(() => {
-    if (!coords.length) {
+      getCurrentState(coords).then(resolve);
+    } else if (town) {
+      getCurrentState(town).then(resolve);
+    } else {
       setProcess('geolocation disabled');
     }
-  }, [coords]);
-
-  useEffect(() => {
-    if (town) {
-      getCurrentStateBySearch(town).then(resolve);
-    }
-  }, [town]);
+  }, [coords, town]);
 
   const resolve = state => {
     clearError();

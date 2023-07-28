@@ -1,27 +1,29 @@
 import { useHttp } from "../hooks/http.hook";
 
+const cache = new Map();
+
 const useWeatherService = () => {
     const { request, clearError, process, setProcess } = useHttp();
 
     const _apiBase = 'https://api.weatherapi.com/v1/';
     const _apiKey = 'cfb797107452426caf663343232403';
 
-    const getCurrentState = async (lat, lon, days = 3) => {
+    const getCurrentState = async (geodata, days = 3) => {
+        if (cache.has(geodata)) {
+            return cache.get(geodata);
+        }
+
+        const geodataStr = Array.isArray(geodata) ? `${geodata[0]},${geodata[1]}` : geodata;
+
         const res = await request(
-            `${_apiBase}forecast.json?key=${_apiKey}&q=${lat},${lon}&days=${days}`
+            `${_apiBase}forecast.json?key=${_apiKey}&q=${geodataStr}&days=${days}`
         );
-        return transformState(res);
+
+        return transformState(res, geodata);
     };
 
-    const getCurrentStateBySearch = async (town, days = 3) => {
-        const res = await request(
-            `${_apiBase}forecast.json?key=${_apiKey}&q=${town}&days=${days}`
-        );
-        return transformState(res);
-    };
-
-    const transformState = (res) => {
-        return {
+    const transformState = (res, key) => {
+        const obj = {
             currentWeather: {
                 condition: res.current.condition.text,
                 icon: res.current.condition.icon,
@@ -44,14 +46,17 @@ const useWeatherService = () => {
                 }
             }) 
         };
+
+        cache.set(key, obj);
+
+        return obj;
     };
 
     return {
 		clearError,
 		process,
 		setProcess,
-		getCurrentState,
-        getCurrentStateBySearch
+		getCurrentState
 	};
 }
 
