@@ -1,4 +1,4 @@
-# Weather service with 2-days forecast and search
+# Weather service with 2-days forecast and location search
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
