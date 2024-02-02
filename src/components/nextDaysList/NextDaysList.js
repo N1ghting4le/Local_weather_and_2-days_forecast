@@ -1,6 +1,7 @@
 import NextDaysItem from "../nextDaysItem/NextDaysItem";
 import { Context } from "../app/App";
 import { useContext } from "react";
+import './nextDaysList.css';
 
 const NextDaysList = () => {
     const {process, dailyForecasts} = useContext(Context);

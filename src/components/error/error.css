@@ -1,0 +1,16 @@
+.error {
+    grid-column: 1 / -1;
+    justify-self: center;
+    min-height: 134.4px;
+    font-size: 44px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding-inline: 10px;
+}
+
+@media (max-width: 1024px) {
+    .error {
+        font-size: inherit;
+    }
+}

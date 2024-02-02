@@ -1,0 +1,40 @@
+.location_and_time {
+    display: flex;
+    justify-self: end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+}
+
+.location_and_time span {
+    font-weight: 200;
+}
+
+.time {
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+    place-items: center;
+    gap: 10px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.hidden {
+    opacity: 0;
+    cursor: default;
+}
+
+@media (max-width: 1024px) {
+    .location_and_time {
+        padding-inline: 1rem;
+    }
+}

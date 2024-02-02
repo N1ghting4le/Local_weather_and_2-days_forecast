@@ -3,6 +3,7 @@ import { Context } from '../app/App';
 import { currentHours } from '../timeAndLocation/TimeAndLocation';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
+import './weatherInfo.css';
 
 export const updateWeather = (root, hours, setWeather) => {
     setWeather({

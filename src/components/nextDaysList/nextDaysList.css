@@ -1,0 +1,50 @@
+.next_days {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    
+}
+
+.next_days li {
+    box-sizing: border-box;
+    width: 165px;
+    height: 220px;
+    border-radius: 11px;
+    box-shadow: 5px 5px 30px rgb(18, 18, 18);
+    background-color:rgba(128, 128, 128, 0.667);
+    transition: background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.next_days li:hover {
+    background-color:rgba(69, 69, 69, 0.667);
+    cursor: pointer;
+}
+
+.next_days li span {
+    font-size: 25px;
+    font-weight: 200;
+}
+
+.next_days li img {
+    height: 100px;
+    width: 100px;
+}
+
+@media (max-width: 1024px) {
+    .next_days {
+        padding-inline: 20px;
+    }
+
+    .next_days li {
+        height: auto;
+        gap: 10px;
+        padding-block: 10px;
+    }
+}

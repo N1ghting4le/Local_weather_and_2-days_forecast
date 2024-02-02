@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { Context } from "../app/App";
 import { updateWeather } from "../weatherInfo/WeatherInfo";
 import { useContext } from "react";
+import './nextDaysItem.css';
 
 const NextDaysItem = ({dailyForecast, i}) => {
     const {setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num} = useContext(Context);
