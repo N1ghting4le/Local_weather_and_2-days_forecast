@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { Context } from "../app/App";
 import { updateWeather } from "../weatherInfo/WeatherInfo";
 import { useContext } from "react";
+import { onEnter } from "../timeAndLocation/TimeAndLocation";
 import './nextDaysItem.css';
 
 const NextDaysItem = ({dailyForecast, i}) => {
@@ -18,12 +19,6 @@ const NextDaysItem = ({dailyForecast, i}) => {
         }                                      
     }
 
-    const updateWeatherInfoByKey = (e) => {
-        if (e.code === 'Enter') {
-            updateWeatherInfo();
-        }
-    }
-
     const toggleActive = () => {
         return i === num ?
         classNames({
@@ -35,7 +30,7 @@ const NextDaysItem = ({dailyForecast, i}) => {
     }
 
     return (
-        <li onClick={updateWeatherInfo} onKeyDown={updateWeatherInfoByKey} tabIndex={0} className={toggleActive()}>
+        <li onClick={updateWeatherInfo} onKeyDown={(e) => onEnter(e, updateWeatherInfo)} tabIndex={0} className={toggleActive()}>
             <span className="day">{dailyForecast.date}</span>
             <img src={dailyForecast.weather.condition.icon} alt={dailyForecast.weather.condition.text}></img>
             <span className="temperature">{Math.floor(dailyForecast.weather.mintemp_c)}&deg; - {Math.floor(dailyForecast.weather.maxtemp_c)}&deg;</span>

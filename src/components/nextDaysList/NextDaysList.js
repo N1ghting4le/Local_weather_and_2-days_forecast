@@ -6,11 +6,9 @@ import './nextDaysList.css';
 const NextDaysList = () => {
     const {process, dailyForecasts} = useContext(Context);
 
-    const createDayCards = () => {
-        return dailyForecasts ? dailyForecasts.map((dailyForecast, i) => {
-            return <NextDaysItem key={i} i={i} dailyForecast={dailyForecast}/>
-        }) : null;
-    }
+    const createDayCards = () => dailyForecasts ? 
+        dailyForecasts.map((dailyForecast, i) => <NextDaysItem key={i} i={i} dailyForecast={dailyForecast}/>) 
+        : null;
 
     const elements = createDayCards();
 

@@ -5,6 +5,12 @@ import './timeAndLocation.css';
 
 export const currentHours = currentLocationAndTime => +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'));
 
+export const onEnter = (e, func, ...args) => {
+    if (e.code === 'Enter') {
+        func(...args);
+    }
+}
+
 const TimeAndLocation = () => {
     const {process, locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime} = useContext(Context);
     const index = locationAndTime ? locationAndTime.time.indexOf(':') : null;
@@ -35,12 +41,6 @@ const TimeAndLocation = () => {
         }
     }
 
-    const onEnter = (e, func) => {
-        if (e.code === 'Enter') {
-            func();
-        }
-    }
-
     const toggleArrow = condition => {
         return condition ?
         classNames({
@@ -59,12 +59,12 @@ const TimeAndLocation = () => {
                 <i className={`arrow left ${toggleArrow((num === 0 && hours === currHours) || hours === 0)}`} 
                    tabIndex={0} 
                    onClick={onHoursDecrease} 
-                   onKeyDown={(e) => onEnter(e, onHoursIncrease)}/>
+                   onKeyDown={(e) => onEnter(e, onHoursDecrease)}/>
                    {locationAndTime.time} 
                 <i className={`arrow right ${toggleArrow(hours === 23)}`} 
                    tabIndex={0} 
                    onClick={onHoursIncrease} 
-                   onKeyDown={(e) => onEnter(e, onHoursDecrease)}/>
+                   onKeyDown={(e) => onEnter(e, onHoursIncrease)}/>
             </span>
         </div>
     ) : null;
