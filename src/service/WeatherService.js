@@ -13,7 +13,7 @@ const useWeatherService = () => {
             return cache.get(geodata);
         }
 
-        const geodataStr = Array.isArray(geodata) ? `${geodata[0]},${geodata[1]}` : geodata;
+        const geodataStr = Array.isArray(geodata) ? geodata.join() : geodata;
 
         const res = await request(
             `${_apiBase}forecast.json?key=${_apiKey}&q=${geodataStr}&days=${days}`

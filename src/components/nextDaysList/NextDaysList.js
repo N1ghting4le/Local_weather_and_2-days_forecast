@@ -1,10 +1,9 @@
 import NextDaysItem from "../nextDaysItem/NextDaysItem";
-import { Context } from "../app/App";
-import { useContext } from "react";
+import { useGlobalContext } from "../GlobalContext";
 import './nextDaysList.css';
 
 const NextDaysList = () => {
-    const {process, dailyForecasts} = useContext(Context);
+    const {process, dailyForecasts} = useGlobalContext();
 
     const createDayCards = () => dailyForecasts ? 
         dailyForecasts.map((dailyForecast, i) => <NextDaysItem key={i} i={i} dailyForecast={dailyForecast}/>) 

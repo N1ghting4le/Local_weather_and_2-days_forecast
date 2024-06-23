@@ -1,33 +1,25 @@
 import classNames from "classnames";
-import { Context } from "../app/App";
-import { updateWeather } from "../weatherInfo/WeatherInfo";
-import { useContext } from "react";
-import { onEnter } from "../timeAndLocation/TimeAndLocation";
+import { useGlobalContext } from "../GlobalContext";
+import { onEnter } from "../../commonFunctions";
 import './nextDaysItem.css';
 
 const NextDaysItem = ({dailyForecast, i}) => {
-    const {setlocationAndTime, setNum, current, setWeather, currentLocationAndTime, num} = useContext(Context);
+    const {setlocationAndTime, setNum, current, currentLocationAndTime, num, setWeather, updateWeather} = useGlobalContext();
 
     const updateWeatherInfo = () => {
         setNum(i);
         if (i !== 0) {
             setlocationAndTime(state => ({...state, date: dailyForecast.date, time: '12:00'}));
-            updateWeather(dailyForecast, 12, setWeather);
+            updateWeather(dailyForecast, 12);
         } else {
             setWeather(current);
             setlocationAndTime(currentLocationAndTime);
         }                                      
     }
 
-    const toggleActive = () => {
-        return i === num ?
-        classNames({
-            'active': true
-        }) :
-        classNames({
-            'active': false
-        });
-    }
+    const toggleActive = () => classNames({
+        'active': i === num
+    });
 
     return (
         <li onClick={updateWeatherInfo} onKeyDown={(e) => onEnter(e, updateWeatherInfo)} tabIndex={0} className={toggleActive()}>

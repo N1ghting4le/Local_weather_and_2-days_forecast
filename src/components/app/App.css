@@ -7,6 +7,7 @@ body {
     font-size: 30px;
     color: white;
     margin: 0;
+    overflow-y: hidden;
 }
 
 h1 {
@@ -15,6 +16,7 @@ h1 {
     text-align: center;
     font-size: 66px;
     font-weight: 700;
+    margin-block: 25px;
 }
 
 main {
@@ -61,10 +63,11 @@ i:hover {
 .info_wrapper {
     box-sizing: border-box;
     display: grid;
+    align-items: flex-start;
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: 3rem;
     padding: 0 40px;
-    width: 100%;
+    width: 100vw;
     background-color: rgba(57, 56, 56, 0.548);
 }
 
@@ -79,7 +82,6 @@ i:hover {
     }
 
     .info_wrapper {
-        flex-direction: column;
         gap: 30px;
     }
 }
@@ -87,6 +89,7 @@ i:hover {
 @media (max-width: 431px) {
     .info_wrapper {
         display: flex;
+        align-items: center;
         padding: 0;
     }
 }

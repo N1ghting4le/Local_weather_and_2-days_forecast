@@ -1,6 +1,7 @@
 .main_info {
     display: flex;
     justify-self: flex-start;
+    align-self: center;
     justify-content: center;
     align-items: center;
     gap: 11px;

@@ -14,12 +14,9 @@ export const useHttp = () => {
                 throw new Error(`Could not fetch ${url}, status: ${response.status}`);
             }
 
-            const data = await response.json();
-
-            return data;
+            return await response.json();
         } catch(e) {
             setProcess('error');
-            throw e;
         }
     }, []);
 

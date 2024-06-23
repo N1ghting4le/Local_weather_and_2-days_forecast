@@ -1,4 +1,4 @@
-import { onEnter } from '../timeAndLocation/TimeAndLocation';
+import { onEnter } from "../../commonFunctions";
 import './search.css';
 
 const Search = ({setTown}) => (

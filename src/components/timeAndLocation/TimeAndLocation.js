@@ -1,70 +1,55 @@
-import { useEffect, useContext } from "react";
-import { Context } from "../app/App";
+import { useGlobalContext } from "../GlobalContext";
+import { getHours, onEnter } from "../../commonFunctions";
 import classNames from "classnames";
 import './timeAndLocation.css';
 
-export const currentHours = currentLocationAndTime => +currentLocationAndTime.time.slice(0, currentLocationAndTime.time.indexOf(':'));
-
-export const onEnter = (e, func, ...args) => {
-    if (e.code === 'Enter') {
-        func(...args);
-    }
-}
+const Arrow = ({classNames, handleClick}) => (
+    <i className={'arrow ' + classNames}
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyDown={(e) => onEnter(e, handleClick)}/>
+);
 
 const TimeAndLocation = () => {
-    const {process, locationAndTime, currentLocationAndTime, hours, setHours, num, setlocationAndTime} = useContext(Context);
-    const index = locationAndTime ? locationAndTime.time.indexOf(':') : null;
-    const currHours = currentLocationAndTime ? currentHours(currentLocationAndTime) : null;
-
-    useEffect(() => {
-        if (locationAndTime) {
-            setHours(+locationAndTime.time.slice(0, index));
-        }
-    }, [locationAndTime]);
+    const {process, locationAndTime, currentLocationAndTime, setlocationAndTime, dailyForecasts, num, current, setWeather, updateWeather} = useGlobalContext();
+    const currHours = getHours(currentLocationAndTime);
+    const hours = getHours(locationAndTime);
+    const disableDecreaseCondition = (num === 0 && hours === currHours) || hours === 0;
+    const disableIncreaseCondition = hours === 23;
 
     const onHoursIncrease = () => {
-        if (hours === 23) return;
+        if (disableIncreaseCondition) return;
 
-        setHours(hours => hours + 1);
-        setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, index) + 1}:00`}));
+        setlocationAndTime(state => ({...state, time: `${hours + 1}:00`}));
+        updateWeather(dailyForecasts[num], hours + 1);
     }
 
     const onHoursDecrease = () => {
-        if ((num === 0 && hours === currHours) || hours === 0) return;
-
-        setHours(hours => hours - 1);
+        if (disableDecreaseCondition) return;
 
         if (num === 0 && hours - 1 === currHours) {
             setlocationAndTime(currentLocationAndTime);
+            setWeather(current);
         } else {
-            setlocationAndTime(state => ({...state, time: `${+state.time.slice(0, index) - 1}:00`}));
+            setlocationAndTime(state => ({...state, time: `${hours - 1}:00`}));
+            updateWeather(dailyForecasts[num], hours - 1);
         }
     }
 
-    const toggleArrow = condition => {
-        return condition ?
-        classNames({
-            'hidden': true
-        }) :
-        classNames({
-            'hidden': false
-        });
-    }
+    const toggleArrow = condition => classNames({
+        'hidden': condition
+    });
 
-    return locationAndTime && process === 'confirmed' ? (
+    return process === 'confirmed' ? (
         <div className="location_and_time">
             <span style={{textAlign: 'center'}}>{locationAndTime.place}, {locationAndTime.country}</span>
             <span>{locationAndTime.date}</span>
             <span className="time">
-                <i className={`arrow left ${toggleArrow((num === 0 && hours === currHours) || hours === 0)}`} 
-                   tabIndex={0} 
-                   onClick={onHoursDecrease} 
-                   onKeyDown={(e) => onEnter(e, onHoursDecrease)}/>
-                   {locationAndTime.time} 
-                <i className={`arrow right ${toggleArrow(hours === 23)}`} 
-                   tabIndex={0} 
-                   onClick={onHoursIncrease} 
-                   onKeyDown={(e) => onEnter(e, onHoursIncrease)}/>
+                <Arrow classNames={`left ${toggleArrow(disableDecreaseCondition)}`}
+                        handleClick={onHoursDecrease}/>
+                {locationAndTime.time}
+                <Arrow classNames={`right ${toggleArrow(disableIncreaseCondition)}`}
+                        handleClick={onHoursIncrease}/>
             </span>
         </div>
     ) : null;
